@@ -14,4 +14,6 @@ public partial class Favorite
     public DateTime? ChosenDate { get; set; }
 
     public string? Description { get; set; }
+
+    public virtual Product? Product { get; set; }
 }

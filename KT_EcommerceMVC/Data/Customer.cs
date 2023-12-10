@@ -31,5 +31,7 @@ public partial class Customer
 
     public string? RandomKey { get; set; }
 
+    public virtual ICollection<Friend> Friends { get; set; } = new List<Friend>();
+
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

@@ -90,10 +90,14 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.Address).HasMaxLength(60);
             entity.Property(e => e.CustomerCode).HasMaxLength(20);
-            entity.Property(e => e.DateOfBirth).HasColumnType("datetime");
+            entity.Property(e => e.DateOfBirth)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(50);
-            entity.Property(e => e.Image).HasMaxLength(50);
+            entity.Property(e => e.Image)
+                .HasMaxLength(50)
+                .HasDefaultValue("Photo.gif");
             entity.Property(e => e.Password).HasMaxLength(50);
             entity.Property(e => e.PhoneNumber).HasMaxLength(24);
             entity.Property(e => e.RandomKey)
@@ -132,6 +136,11 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.CustomerCode).HasMaxLength(20);
             entity.Property(e => e.Description).HasMaxLength(255);
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Favorites)
+                .HasForeignKey(d => d.ProductId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_Favorites_Products");
         });
 
         modelBuilder.Entity<Feedback>(entity =>
@@ -141,21 +150,35 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.FeedbackId).HasColumnName("FeedbackID");
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FeedbackCode).HasMaxLength(50);
+            entity.Property(e => e.FeedbackDate).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.FullName).HasMaxLength(500);
-            entity.Property(e => e.NgayGy).HasColumnName("NgayGY");
             entity.Property(e => e.PhoneNumber).HasMaxLength(50);
             entity.Property(e => e.Reply).HasMaxLength(50);
             entity.Property(e => e.TopicId).HasColumnName("TopicID");
+
+            entity.HasOne(d => d.Topic).WithMany(p => p.Feedbacks)
+                .HasForeignKey(d => d.TopicId)
+                .HasConstraintName("FK_Feedback_Topics");
         });
 
         modelBuilder.Entity<Friend>(entity =>
         {
             entity.Property(e => e.FriendId).HasColumnName("FriendID");
-            entity.Property(e => e.CustomerCode).HasMaxLength(20);
+            entity.Property(e => e.CustomerId).HasColumnName("CustomerID");
             entity.Property(e => e.Email).HasMaxLength(50);
             entity.Property(e => e.FullName).HasMaxLength(50);
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
-            entity.Property(e => e.SentDate).HasColumnType("datetime");
+            entity.Property(e => e.SentDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Customer).WithMany(p => p.Friends)
+                .HasForeignKey(d => d.CustomerId)
+                .HasConstraintName("FK_Friends_Customers");
+
+            entity.HasOne(d => d.Product).WithMany(p => p.Friends)
+                .HasForeignKey(d => d.ProductId)
+                .HasConstraintName("FK_Advertise_Products");
         });
 
         modelBuilder.Entity<Order>(entity =>
@@ -166,11 +189,21 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.EmployeeId).HasColumnName("EmployeeID");
             entity.Property(e => e.FullName).HasMaxLength(500);
             entity.Property(e => e.Notes).HasMaxLength(50);
-            entity.Property(e => e.OrderDate).HasColumnType("datetime");
-            entity.Property(e => e.PaymentMethod).HasMaxLength(50);
-            entity.Property(e => e.RequiredDate).HasColumnType("datetime");
-            entity.Property(e => e.ShippedDate).HasColumnType("datetime");
-            entity.Property(e => e.ShippingMethod).HasMaxLength(50);
+            entity.Property(e => e.OrderDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.PaymentMethod)
+                .HasMaxLength(50)
+                .HasDefaultValue("Cash");
+            entity.Property(e => e.RequiredDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ShippedDate)
+                .HasDefaultValueSql("(((1)/(1))/(1900))")
+                .HasColumnType("datetime");
+            entity.Property(e => e.ShippingMethod)
+                .HasMaxLength(50)
+                .HasDefaultValue("Airline");
             entity.Property(e => e.StatusId).HasColumnName("StatusID");
 
             entity.HasOne(d => d.Customer).WithMany(p => p.Orders)
@@ -193,6 +226,7 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
             entity.Property(e => e.OrderId).HasColumnName("OrderID");
             entity.Property(e => e.ProductId).HasColumnName("ProductID");
+            entity.Property(e => e.Quantity).HasDefaultValue(1);
 
             entity.HasOne(d => d.Order).WithMany(p => p.OrderDetails)
                 .HasForeignKey(d => d.OrderId)
@@ -227,9 +261,12 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.Image).HasMaxLength(500);
             entity.Property(e => e.ProductName).HasMaxLength(500);
-            entity.Property(e => e.ProductionDate).HasColumnType("datetime");
+            entity.Property(e => e.ProductionDate)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
             entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
             entity.Property(e => e.UnitDescription).HasMaxLength(500);
+            entity.Property(e => e.UnitPrice).HasDefaultValue(0.0);
 
             entity.HasOne(d => d.Category).WithMany(p => p.Products)
                 .HasForeignKey(d => d.CategoryId)
@@ -249,6 +286,7 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.QnAid)
                 .ValueGeneratedNever()
                 .HasColumnName("QnAID");
+            entity.Property(e => e.DateSubmitted).HasDefaultValueSql("(getdate())");
             entity.Property(e => e.EmployeeCode).HasMaxLength(50);
             entity.Property(e => e.Question).HasMaxLength(500);
             entity.Property(e => e.Reply).HasMaxLength(500);

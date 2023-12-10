@@ -31,6 +31,10 @@ public partial class Product
 
     public virtual Category Category { get; set; } = null!;
 
+    public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
+
+    public virtual ICollection<Friend> Friends { get; set; } = new List<Friend>();
+
     public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
 
     public virtual Supplier Supplier { get; set; } = null!;

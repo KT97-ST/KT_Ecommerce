@@ -7,7 +7,7 @@ public partial class Friend
 {
     public int FriendId { get; set; }
 
-    public string? CustomerCode { get; set; }
+    public int? CustomerId { get; set; }
 
     public int ProductId { get; set; }
 
@@ -18,4 +18,8 @@ public partial class Friend
     public DateTime SentDate { get; set; }
 
     public string? Notes { get; set; }
+
+    public virtual Customer? Customer { get; set; }
+
+    public virtual Product Product { get; set; } = null!;
 }
