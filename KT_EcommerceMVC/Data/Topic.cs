@@ -10,6 +10,4 @@ public partial class Topic
     public string? TopicName { get; set; }
 
     public string? EmployeeCode { get; set; }
-
-    public virtual ICollection<Feedback> Feedbacks { get; set; } = new List<Feedback>();
 }

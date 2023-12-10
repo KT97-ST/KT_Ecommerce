@@ -13,7 +13,7 @@ public partial class Feedback
 
     public string Content { get; set; } = null!;
 
-    public DateOnly DateSent { get; set; }
+    public DateOnly NgayGy { get; set; }
 
     public string? FullName { get; set; }
 
@@ -26,6 +26,4 @@ public partial class Feedback
     public string? Reply { get; set; }
 
     public DateOnly? ReplyDate { get; set; }
-
-    public virtual Topic Topic { get; set; } = null!;
 }

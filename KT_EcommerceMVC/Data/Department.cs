@@ -12,4 +12,8 @@ public partial class Department
     public string Department1 { get; set; } = null!;
 
     public string? Information { get; set; }
+
+    public virtual ICollection<Assignment> Assignments { get; set; } = new List<Assignment>();
+
+    public virtual ICollection<Permission> Permissions { get; set; } = new List<Permission>();
 }

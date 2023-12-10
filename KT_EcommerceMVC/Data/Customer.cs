@@ -30,4 +30,6 @@ public partial class Customer
     public int Role { get; set; }
 
     public string? RandomKey { get; set; }
+
+    public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }

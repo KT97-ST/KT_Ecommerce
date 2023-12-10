@@ -7,11 +7,15 @@ public partial class Assignment
 {
     public int AssignmentId { get; set; }
 
-    public string EmployeeCode { get; set; } = null!;
+    public int EmployeeId { get; set; }
 
-    public string DepartmentCode { get; set; } = null!;
+    public int DepartmentId { get; set; }
 
     public DateTime? AssignmentDate { get; set; }
 
     public bool? Active { get; set; }
+
+    public virtual Department Department { get; set; } = null!;
+
+    public virtual Employee Employee { get; set; } = null!;
 }

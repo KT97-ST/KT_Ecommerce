@@ -18,6 +18,4 @@ public partial class Friend
     public DateTime SentDate { get; set; }
 
     public string? Notes { get; set; }
-
-    public virtual Product Product { get; set; } = null!;
 }
