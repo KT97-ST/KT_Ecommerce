@@ -1,23 +1,9 @@
 ﻿@model IEnumerable<KT_EcommerceMVC.ViewModels.ProductsVM>
-
 @{
-    ViewData["Title"] = "Index";
-    Layout = "_ProductList";
+    ViewData["Title"] = "Search";
+    Layout = "~/Views/Shared/_ProductList.cshtml";
 }
 
-<!-- Single Page Header start -->
-@section BreadCum {
-    <div class="container-fluid page-header py-5">
-        <h1 class="text-center text-white display-6">Shop</h1>
-        <ol class="breadcrumb justify-content-center mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Pages</a></li>
-            <li class="breadcrumb-item active text-white">Shop</li>
-        </ol>
-    </div>
-}
-<!-- Single Page Header End -->
-<!-- Fruits Shop Start-->
 @foreach (var item in Model)
 {
     <div class="col-md-6 col-lg-6 col-xl-4">
@@ -49,4 +35,4 @@
         <a href="#" class="rounded">&raquo;</a>
     </div>
 </div>
-<!-- Fruits Shop End-->
+
