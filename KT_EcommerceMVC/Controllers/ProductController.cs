@@ -1,6 +1,7 @@
 ﻿using KT_EcommerceMVC.Data;
 using KT_EcommerceMVC.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace KT_EcommerceMVC.Controllers
 {
@@ -48,6 +49,32 @@ namespace KT_EcommerceMVC.Controllers
                 CategoryName = p.Category.CategoryName
 
             });
+            return View(result);
+        }
+        public IActionResult Detail(int id)
+        {
+            var data = _context.Products
+                .Include(p=> p.Category)
+                .SingleOrDefault(p => p.ProductId == id);
+            if(data == null)
+            {
+                TempData["Message"] = $"Không tìm thấy sản phẩm có mã {id}";
+                return Redirect("/404");
+            }
+
+            var result = new ProductDetailVM
+            {
+                ProductId = id,
+                ProductName = data.ProductName,
+                UnitPrice = data.UnitPrice ?? 0,
+                Image = data.Image ?? "",
+                UnitDescription = data.UnitDescription ?? "",
+                Description = data.Description ?? "",
+                CategoryName = data.Category.CategoryName ?? "",
+                InventoryNumber = 10,
+                Rate = 5
+
+            };
             return View(result);
         }
     }

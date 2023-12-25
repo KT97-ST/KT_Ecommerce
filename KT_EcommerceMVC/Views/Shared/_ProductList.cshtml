@@ -13,12 +13,7 @@
             <div class="col-lg-12">
                 <div class="row g-4">
                     <div class="col-xl-3">
-                        <form asp-action="Search" asp-controller="Product" class="d-flex">
-                            <div class="input-group w-100 mx-auto">
-                                <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1" name="query">
-                                <button id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></button>
-                            </div>
-                        </form>
+                        @await Html.PartialAsync("_SearchPanel");
                     </div>
                     <div class="col-6"></div>
                     <div class="col-xl-3">

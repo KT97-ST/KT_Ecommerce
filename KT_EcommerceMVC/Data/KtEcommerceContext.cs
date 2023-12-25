@@ -264,6 +264,7 @@ public partial class KtEcommerceContext : DbContext
             entity.Property(e => e.ProductionDate)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+            entity.Property(e => e.ShortDescription).HasMaxLength(500);
             entity.Property(e => e.SupplierId).HasColumnName("SupplierID");
             entity.Property(e => e.UnitDescription).HasMaxLength(500);
             entity.Property(e => e.UnitPrice).HasDefaultValue(0.0);

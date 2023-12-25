@@ -29,6 +29,8 @@ public partial class Product
 
     public int SupplierId { get; set; }
 
+    public string? ShortDescription { get; set; }
+
     public virtual Category Category { get; set; } = null!;
 
     public virtual ICollection<Favorite> Favorites { get; set; } = new List<Favorite>();
